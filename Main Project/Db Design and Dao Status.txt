@@ -1,0 +1,74 @@
+MEDICAL SHOP APP
+
+
+DB DESIGN
+
+TABLES
+
+1.USERS
+
+USER_ID
+FULL_NAME
+CONTACT_ADDRESS
+USER_PASSWORD
+USER_WALLET
+USER_MAIL
+AGE
+POINTS
+USER_MOBILE
+
+(DAO  Validation completed,View Products completed,Register completed,Update yet to complete,Buy products yet to start,cancel product yet to start)
+
+2.ADMINS
+
+ADMIN_ID
+ADMIN_NAME
+AGE
+ADMIN-PASSWORD
+ADMIN_EMAIL
+ADMIN_MOBILE
+
+(DAO  Validation completed,View Products completed,view users yet to complete,delete user)
+
+3.PRODUCTS
+
+PRODUCT_ID
+PRODUCT_CATEGORY
+PRODUCT_NAME
+DESCRIPTION
+PRICE
+QUANTITY
+PRODUCT_IMG
+
+(DAO  View Products,show products,update products,delete products)
+
+4.ORDERS
+
+ORDER_ID
+USER_ID
+ORDER_ID
+PRICE
+ORDER_STATUS
+ORDER_TYPE
+
+(DAO  pojo,dao yet to start)
+5.ORDER_ITEMS
+
+ITEM_ID
+ORDER_ID
+PRODUCT_ID
+QUANTITY
+UNIT_PRICE
+TOTAL_PRICE
+
+(Dao pojo,dao yet to start)
+
+6.CART
+
+ITEMS
+PRODUCT_ID
+USER_ID
+UNIT_PRICE
+QUANTITY
+
+(cart pojo,dao yet to start)

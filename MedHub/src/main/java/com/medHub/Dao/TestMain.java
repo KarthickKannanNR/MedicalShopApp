@@ -3,9 +3,10 @@ package com.medHub.Dao;
 import java.util.List;
 import java.util.Scanner;
 
-import com.medHub.module.AdminModule;
-import com.medHub.module.ProductModule;
-import com.medHub.module.UserModule;
+import com.medHub.model.AdminModel;
+import com.medHub.model.Cart;
+import com.medHub.model.ProductModel;
+import com.medHub.model.UserModel;
 
 public class TestMain {
 
@@ -99,7 +100,7 @@ public class TestMain {
 
 						}
 					} while (flagpswd);
-					UserModule user = new UserModule(userName, age, mobile, userMail, pswd);
+					UserModel user = new UserModel(userName, age, mobile, userMail, pswd);
 					userDao1.insert(user);
 
 				case 2:
@@ -137,7 +138,7 @@ public class TestMain {
 
 					if (loginEmail.endsWith("medhub.com")) {
 						do {
-							AdminModule admin = adminDao.login(loginEmail, loginPassword);
+							AdminModel admin = adminDao.login(loginEmail, loginPassword);
 
 							if (admin == null) {
 								System.out.println("invalid username or password");
@@ -161,7 +162,7 @@ public class TestMain {
 								switch (adminchoice) {
 
 								case "1":
-									List<ProductModule> productList = allProducts.viewProduts();
+									List<ProductModel> productList = allProducts.viewProduts();
 
 									for (int i = 0; i < productList.size(); i++) {
 										System.out.println(productList.get(i));
@@ -170,7 +171,7 @@ public class TestMain {
 									break;
 								case "2":
 									UserDao allUsers = new UserDao();
-									List<UserModule> userList = allUsers.ViewAllUser();
+									List<UserModel> userList = allUsers.ViewAllUser();
 
 									for (int i = 0; i < userList.size(); i++) {
 										System.out.println(userList.get(i));
@@ -187,7 +188,7 @@ public class TestMain {
 									int unitPrice = Integer.parseInt(sc.nextLine());
 									int quantity = Integer.parseInt(sc.nextLine());
 									int productId = Integer.parseInt(sc.nextLine());
-									ProductModule productModule = new ProductModule(productname, productcategory,
+									ProductModel productModule = new ProductModel(productname, productcategory,
 											description, unitPrice, quantity, productId);
 									productDao.insertProduct(productModule);
 									break;
@@ -207,14 +208,13 @@ public class TestMain {
 									System.out.println("Enter quantity to be update");
 									int updateQuantity = Integer.parseInt(sc.nextLine());
 									productDao.updateProducts(updateProductId, updateproductcategory, updateProductName,
-											updateProductDescription, updateUnitPrice, updateQuantity);
+									updateProductDescription, updateUnitPrice, updateQuantity);
 									break;
 
 								case "5":
 									System.out.println("Enter product Id");
 									int userId = Integer.parseInt(sc.nextLine());
 									productDao.deleteProduct(userId);
-
 									break;
 								}
 							}
@@ -229,7 +229,7 @@ public class TestMain {
 					} else {
 
 						boolean adminflag = true;
-						UserModule currentUser = userDao1.login(loginEmail, loginPassword);
+						UserModel currentUser = userDao1.login(loginEmail, loginPassword);
 						if (currentUser == null) {
 							System.out.println("not a registered user");
 							adminflag = false;
@@ -239,7 +239,7 @@ public class TestMain {
 
 						do {
 							ProductDao allProducts = new ProductDao();
-							System.out.println("1. Show All Products    2.Update Account    3.Delete Account  ");
+							System.out.println("1. Show All Products    2.Update Account    3.Delete Account");
 							String choice = sc.nextLine();
 							if (choice.matches("[0-9]{1}")) {
 								adminflag = false;
@@ -247,28 +247,37 @@ public class TestMain {
 								switch (val) {
 								case 1:
 
-									List<ProductModule> productList = allProducts.viewProduts();
+									List<ProductModel> productList = allProducts.viewProduts();
 
 									for (int i = 0; i < productList.size(); i++) {
 										System.out.println(productList.get(i));
 									}
+									System.out.println(currentUser.getAge());  
+									System.out.println(currentUser.getUserId());
+									System.out.println(currentUser.getName());
 									
 									boolean product=true;
 									do
 									{
-										System.out.println("   1.Add products to cart   2.Buy products ");
-										String productChoice=sc.nextLine();
-										int productChoices=Integer.parseInt(productChoice);
-										if(productChoice.matches("[1-2] {1}"))
+										System.out.println("   1.Add products to cart ");
+										String productChoices=sc.nextLine();
+										
+										if(productChoices.matches("[1-2] {1}"))
 										{
 											switch(productChoices)
 											{
 											
-											case 1:
+											case "1":
+												System.out.println("enter product name");
+												String productName= sc.nextLine();
+												System.out.println("enter quantity");
+												int quantity=sc.nextInt();
+												Cart cart = new Cart();
 												
+
 												
 												break;
-											case 2:
+											case "2":
 												break;
 											}
 										}
@@ -286,7 +295,7 @@ public class TestMain {
 
 								case 2:
 									System.out.println("update all");
-									UserModule userModule = new UserModule();
+									UserModel userModule = new UserModel();
 									System.out.println(userModule.getUserMail());
 									System.out.println("update full name");
 									String fullname = sc.nextLine();
@@ -313,7 +322,6 @@ public class TestMain {
 									break;
 									
 								case 4:
-									
 										break;
 								}
 

@@ -1,4 +1,4 @@
-package com.medHub.module;
+package com.medHub.model;
 
 import java.util.Objects;
 

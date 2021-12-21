@@ -1,4 +1,4 @@
-package com.medHub.module;
+package com.medHub.model;
 
 import java.sql.Date;
 import java.util.Objects;

@@ -10,21 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.medHub.connection.GetConnection;
-import com.medHub.module.ProductModule;
+import com.medHub.model.ProductModel;
 
 public class ProductDao {
 	
-	public List<ProductModule> viewProduts()
+	public List<ProductModel> viewProduts()
 	{
 		String viewQuery="select * from products";
 		Connection con=GetConnection.getDBconnect();
-		List<ProductModule> productList=new ArrayList<ProductModule>();
+		List<ProductModel> productList=new ArrayList<ProductModel>();
 		try {
 			Statement smt = con.createStatement();
 			ResultSet rs= smt.executeQuery(viewQuery);
 			
 			while(rs.next()) {
-				ProductModule product=new ProductModule(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),
+				ProductModel product=new ProductModel(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDouble(5),
 						rs.getInt(6),rs.getString(7));
 				productList.add(product);				
 				}
@@ -37,18 +37,18 @@ public class ProductDao {
 		return productList;
 	}
 	
-	public void insertProduct(ProductModule productModule) throws SQLException
+	public void insertProduct(ProductModel productModel) throws SQLException
 	{
 	
 		String query="insert into products (product_category,product_name,description,unit_price,quantity,product_id) values (?,?,?,?,?,?)";
 		Connection con=GetConnection.getDBconnect();
 		PreparedStatement pst = con.prepareStatement(query);
-		pst.setString(1, productModule.getProductCategory());
-		pst.setString(2, productModule.getProductName());
-		pst.setString(3, productModule.getDescription());
-		pst.setInt(4, productModule.getUnitPrice());
-		pst.setInt(5, productModule.getQuantity());
-		pst.setInt(6, productModule.getProductId());
+		pst.setString(1, productModel.getProductCategory());
+		pst.setString(2, productModel.getProductName());
+		pst.setString(3, productModel.getDescription());
+		pst.setDouble(4, productModel.getUnitPrice());
+		pst.setInt(5, productModel.getQuantity());
+		pst.setInt(6, productModel.getProductId());
 		int result=pst.executeUpdate();
 		System.out.println(result + " product inserted");
 	}
@@ -68,7 +68,7 @@ public class ProductDao {
 		pst.setString(1, updateproductcategory);
 		pst.setString(2, updateProductName);
 		pst.setString(3, updateProductDescription);
-		pst.setInt(4, updateUnitPrice);
+		pst.setDouble(4, updateUnitPrice);
 		pst.setInt(5, updateQuantity);
 		pst.setInt(6, updateProductId);
 		int result=pst.executeUpdate();
@@ -102,6 +102,24 @@ public class ProductDao {
 			con.close();
 			pst.close();
 			
+		}
+		
+		
+		public int findProductId()
+		{
+			int productId=0;
+			String query="select * from products where product_name=?";
+			Connection con = GetConnection.getDBconnect();
+			try {
+				PreparedStatement pst= con.prepareStatement(query);
+				pst.setString(1,query);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return 0;
 			
 		}
 	

@@ -1,8 +1,8 @@
-package com.medHub.module;
+package com.medHub.model;
 
 import java.util.Objects;
 
-public class AdminModule {
+public class AdminModel {
 	
 	private int adminId;
 	private String adminName;
@@ -59,17 +59,17 @@ public class AdminModule {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdminModule other = (AdminModule) obj;
+		AdminModel other = (AdminModel) obj;
 		return adminId == other.adminId && Objects.equals(adminMail, other.adminMail)
 				&& Objects.equals(adminName, other.adminName) && Objects.equals(adminPassword, other.adminPassword)
 				&& adminmobile == other.adminmobile && Objects.equals(age, other.age)
 				;
 	}
-	public AdminModule() {
+	public AdminModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AdminModule(int adminId, String adminName, String gender, int age, long adminmobile, String adminMail,
+	public AdminModel(int adminId, String adminName, String gender, int age, long adminmobile, String adminMail,
 			String adminPassword) {
 		super();
 		this.adminId = adminId;
@@ -80,7 +80,7 @@ public class AdminModule {
 		this.adminMail = adminMail;
 		this.adminPassword = adminPassword;
 	}
-	public AdminModule(String string, int int1, String string2, String string3, long long1) {
+	public AdminModel(String string, int int1, String string2, String string3, long long1) {
 		
 		this.adminName = string;
 		this.age = int1;

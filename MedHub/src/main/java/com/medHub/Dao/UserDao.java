@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.medHub.connection.GetConnection;
-import com.medHub.module.ProductModule;
-import com.medHub.module.UserModule;
+import com.medHub.model.ProductModel;
+import com.medHub.model.UserModel;
 public class UserDao {
 	
 	
-public void insert(UserModule user) throws Exception {
+public void insert(UserModel user) throws Exception {
 		
 	try {
 		String ins="insert into users (full_name,age,user_mobile,user_password,user_email) values(?,?,?,?,?)";
@@ -42,18 +42,18 @@ public void insert(UserModule user) throws Exception {
 	}
 	
 
-public UserModule login(String email,String password) throws SQLException
+public UserModel login(String email,String password) throws SQLException
 {
 	String check="select * from users where user_email='"+email+"' and user_password='"+password+"'";
 	GetConnection conn= new GetConnection();
 	Connection con=conn.getDBconnect();
 	PreparedStatement ps=con.prepareStatement(check);
 	ResultSet rs=ps.executeQuery(check);
-	UserModule user=null;
+	UserModel user=null;
 	try {
 	if(rs.next())
 	{
-	user=new UserModule(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getInt(7),
+	user=new UserModel(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getInt(7),
 			rs.getInt(8),rs.getLong(9));
 	return user;
 	}
@@ -68,11 +68,11 @@ public UserModule login(String email,String password) throws SQLException
 	}
 
 	
-public List<UserModule> ViewAllUser() throws SQLException
+public List<UserModel> ViewAllUser() throws SQLException
 {
 	String viewUsers= "select * from users";
 	Connection conn=GetConnection.getDBconnect();
-	List<UserModule> userList = new ArrayList<UserModule>();
+	List<UserModel> userList = new ArrayList<UserModel>();
 	Statement stm = conn.createStatement();
 	ResultSet rs= stm.executeQuery(viewUsers);
 	
@@ -81,7 +81,7 @@ public List<UserModule> ViewAllUser() throws SQLException
 		rs= stm.executeQuery(viewUsers);
 		while(rs.next())
 		{
-			UserModule allUsers= new UserModule(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getLong(9));
+			UserModel allUsers= new UserModel(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getLong(9));
 			userList.add(allUsers);
 			System.out.println(rs.getString(1));
 		}
@@ -97,7 +97,7 @@ public List<UserModule> ViewAllUser() throws SQLException
 }
 	
 	
-	public int update (UserModule userModule) throws ClassNotFoundException, SQLException {
+	public int update (UserModel userModule) throws ClassNotFoundException, SQLException {
 		
 		String update = null;
 		try {
@@ -126,12 +126,12 @@ public List<UserModule> ViewAllUser() throws SQLException
 		return res;
 	}
 	
-	public UserModule getUserById(int userId)
+	public UserModel getUserById(int userId)
 	{
 		String getuserId="select * from users where user_id=?";
 		Connection con=null;
 		PreparedStatement pstatement = null;
-		UserModule userModule = null;
+		UserModel userModule = null;
 		
 		 con = GetConnection.getDBconnect();
 		 try {
@@ -141,7 +141,7 @@ public List<UserModule> ViewAllUser() throws SQLException
 			e.printStackTrace();
 		}
 		 try {
-			pstatement.setString(1, getuserId);
+			pstatement.setInt(1, userModule.getUserId());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

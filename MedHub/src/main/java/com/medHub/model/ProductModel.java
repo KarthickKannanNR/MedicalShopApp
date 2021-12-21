@@ -1,12 +1,19 @@
-package com.medHub.module;
+package com.medHub.model;
 
 import java.util.Objects;
 
-public class ProductModule {
+public class ProductModel
+{
 	
 	
 	private int productId;
-	public ProductModule(int productId, String productCategory, String productName, String description, int unitPrice,
+	private String productCategory;
+	private String productName;
+	private String description;
+	private double unitPrice;
+	private int quantity;
+	private String productImg;
+	public ProductModel(int productId, String productCategory, String productName, String description, double unitPrice,
 			int quantity, String productImg) {
 		super();
 		this.productId = productId;
@@ -23,12 +30,7 @@ public class ProductModule {
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-	private String productCategory;
-	private String productName;
-	private String description;
-	private int unitPrice;
-	private int quantity;
-	private String productImg;
+
 	
 	public String getDescription() {
 		return description;
@@ -49,12 +51,12 @@ public class ProductModule {
 	public void setProductCategory(String productCategory) {
 		this.productCategory = productCategory;
 	}
-	public ProductModule() {
+	public ProductModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ProductModule(String productCategory, String productName,String description, int unitPrice, int quantity,
+	public ProductModel(String productCategory, String productName,String description, double unitPrice, int quantity,
 			String productImg) {
 		super();
 		
@@ -65,7 +67,7 @@ public class ProductModule {
 		this.quantity = quantity;
 		this.productImg = productImg;
 	}
-	public ProductModule(String productname, String productcategory, String description, int unitPrice,
+	public ProductModel(String productname, String productcategory, String description, double unitPrice,
 			int quantity,int productId) {
 		// TODO Auto-generated constructor stub
 		this.productName = productname;
@@ -94,7 +96,7 @@ public class ProductModule {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProductModule other = (ProductModule) obj;
+		ProductModel other = (ProductModel) obj;
 		return Objects.equals(productCategory, other.productCategory) && Objects.equals(productImg, other.productImg)
 				 && Objects.equals(productName, other.productName)
 				&& quantity == other.quantity && unitPrice == other.unitPrice;
@@ -106,10 +108,10 @@ public class ProductModule {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	public int getUnitPrice() {
+	public double getUnitPrice() {
 		return unitPrice;
 	}
-	public void setUnitPrice(int unitPrice) {
+	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 	public int getQuantity() {

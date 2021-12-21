@@ -1,8 +1,8 @@
-package com.medHub.module;
+package com.medHub.model;
 
 import java.util.Date;
 
-public class UserModule {
+public class UserModel {
 	private int userId;
 	private String Username;
 	private String address;
@@ -11,7 +11,7 @@ public class UserModule {
 	private int age;
 	private int points;
 	private String userPassword;
-	private int wallet;
+	private double wallet;
 	
 	public long getUserMobile() {
 		return userMobile;
@@ -50,14 +50,14 @@ public class UserModule {
 	public void setUserMail(String userMail) {
 		this.userMail = userMail;
 	}
-	public UserModule() {
+	public UserModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	
 	
-	public UserModule(int userId, String username, String address ,String userPassword,int wallet,String userMail,
+	public UserModel(int userId, String username, String address ,String userPassword,int wallet,String userMail,
 			int age,int points,long userMobile) {
 		super();
 		this.userId = userId;
@@ -70,7 +70,7 @@ public class UserModule {
 		this.userPassword = userPassword;
 		this.wallet = wallet;
 	}
-	public UserModule(String username,  int age,long userMobile, String userMail, String userPassword) {
+	public UserModel(String username,  int age,long userMobile, String userMail, String userPassword) {
 		super();
 		Username = username;
 		this.userMail = userMail;
@@ -78,7 +78,7 @@ public class UserModule {
 		this.age = age;
 		this.userPassword = userPassword;
 	}
-	public UserModule( String string, String string2, String string3, String string4, String string5, int int2,
+	public UserModel( String string, String string2, String string3, String string4, String string5, int int2,
 			int int3, long long1) {
 		// TODO Auto-generated constructor stub
 		
@@ -89,10 +89,10 @@ public class UserModule {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public int getWallet() {
+	public double getWallet() {
 		return wallet;
 	}
-	public void setWallet(int wallet) {
+	public void setWallet(double wallet) {
 		this.wallet = wallet;
 	}
 	@Override

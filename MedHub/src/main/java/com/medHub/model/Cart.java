@@ -1,13 +1,16 @@
-package com.medHub.module;
+package com.medHub.model;
 
 import java.util.Objects;
 
 public class Cart {
+	private ProductModel product;
+	private UserModel user;
 	private int items;
 	private int productId;
 	private int userId;
 	private int unitPrice;
 	private int qty;
+
 	public int getItems() {
 		return items;
 	}

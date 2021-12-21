@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.medHub.model.AdminModel;
-import com.medHub.model.Cart;
+import com.medHub.model.CartModel;
 import com.medHub.model.ProductModel;
 import com.medHub.model.UserModel;
 
@@ -260,33 +260,46 @@ public class TestMain {
 									do
 									{
 										System.out.println("   1.Add products to cart ");
-										String productChoices=sc.nextLine();
+										int productChoices=Integer.parseInt(sc.nextLine());
 										
-										if(productChoices.matches("[1-2] {1}"))
+										if(productChoices ==1 || productChoices ==2)
 										{
 											switch(productChoices)
 											{
 											
-											case "1":
+											case 1:
 												System.out.println("enter product name");
 												String productName= sc.nextLine();
+												productName.toLowerCase();
+											ProductModel products = productDao.findProductByName(productName);
+											System.out.println(products.getProductName());
+											System.out.println(products.getQuantity());
 												System.out.println("enter quantity");
-												int quantity=sc.nextInt();
-												Cart cart = new Cart();
-												
-
+												int quantity=Integer.parseInt(sc.nextLine());
+												double totalPrice=products.getUnitPrice()*quantity;
+											
+												if(products.getQuantity()>quantity)
+												{
+													
+													CartModel cart = new CartModel(products,currentUser,quantity,products.getUnitPrice(),totalPrice);
+													CartDao cartDao = new CartDao();
+													cartDao.insertProduct(cart);
+												}
 												
 												break;
-											case "2":
+											case 2:
 												break;
 											}
 										}
 										else {
 											System.out.println("Invalid option");
 										}
-										System.out.println("do you want to continue "+"Y"+"N");
+										System.out.println("do you want to continue "+"Y for yes"+"N for No");
 										String continueChoice=sc.nextLine();
-										
+										if(continueChoice.equalsIgnoreCase("n"))
+										{
+											product=false;
+										}
 										
 											
 									}while(product);

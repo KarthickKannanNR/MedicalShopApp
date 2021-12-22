@@ -302,7 +302,8 @@ public class TestMain {
 												totalPrice = buyProducts.getUnitPrice() * buyProductQuantity;
 												if (buyProducts.getQuantity() > buyProductQuantity) {
 													OrderDao order = new OrderDao();
-													order.insertOrder(currentUser.getUserId(),totalPrice);
+												order.orders(currentUser.getUserId(),totalPrice);
+											OrderModel lastOrder = order.getByOrderId();
 
 												}
 												else {

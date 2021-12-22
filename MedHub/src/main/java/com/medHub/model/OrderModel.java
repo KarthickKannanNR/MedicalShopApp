@@ -65,15 +65,22 @@ public class OrderModel {
 		this.orderStatus = orderStatus;
 		this.orderType = orderType;
 	}
-	public OrderModel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 	public OrderModel(ProductModel buyProducts, UserModel currentUser,double totalPrice) {
 			this.product=buyProducts;
 			this.user=currentUser;
 			this.price=totalPrice;
 		}
+	public OrderModel(Date orderDate, double price, String orderStatus) {
+		super();
+		this.orderDate = orderDate;
+		this.price = price;
+		this.orderStatus = orderStatus;
+	}
+
+	
+	
+	
 	
 	
 }

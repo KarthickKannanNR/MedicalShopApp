@@ -2,7 +2,7 @@ package com.medHub.model;
 
 import java.util.Objects;
 
-public class OrderItems {
+public class OrderItemsModel {
 
 	private int itemId;
 	private int orderId;
@@ -58,17 +58,17 @@ public class OrderItems {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrderItems other = (OrderItems) obj;
+		OrderItemsModel other = (OrderItemsModel) obj;
 		return itemId == other.itemId && orderId == other.orderId && productId == other.productId
 				&& quantity == other.quantity
 				&& Double.doubleToLongBits(totalPrice) == Double.doubleToLongBits(other.totalPrice)
 				&& Double.doubleToLongBits(unitPrice) == Double.doubleToLongBits(other.unitPrice);
 	}
-	public OrderItems() {
+	public OrderItemsModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public OrderItems(int itemId, int orderId, int productId, int quantity, double unitPrice, double totalPrice) {
+	public OrderItemsModel(int itemId, int orderId, int productId, int quantity, double unitPrice, double totalPrice) {
 		super();
 		this.itemId = itemId;
 		this.orderId = orderId;

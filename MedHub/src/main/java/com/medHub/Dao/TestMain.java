@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.medHub.model.AdminModel;
 import com.medHub.model.CartModel;
+import com.medHub.model.OrderModel;
 import com.medHub.model.ProductModel;
 import com.medHub.model.UserModel;
 
@@ -18,11 +19,11 @@ public class TestMain {
 
 		String logregtem = null;
 		boolean end = true;
-//									Starting do while
+//Starting do while
+//																				Login Or Register	
 		do {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("1.Register   2.Login");
-
 			logregtem = sc.nextLine();
 
 			if (logregtem.matches("[1-3]")) {
@@ -30,7 +31,7 @@ public class TestMain {
 				end = false;
 
 				switch (logreg) {
-
+//								Regiter case
 				case 1:
 					String userName = null;
 					boolean b = true;
@@ -45,6 +46,7 @@ public class TestMain {
 									"Name does not consists empty space, not contains number and special character");
 						}
 					} while (b);
+					
 					String tempAge = null;
 					boolean ageFlag = true;
 					int age = 0;
@@ -57,12 +59,13 @@ public class TestMain {
 						if (age >= 18 && age <= 100) {
 							ageFlag = false;
 						} else {
-							System.out.println(
-									"age must be greater than or equal to 18 \n" + "Read terms and conditions");
+							System.out.println("age must be greater than or equal to 18 \n" + "Read terms and conditions");
 						}
 					} while (ageFlag);
+					
 					long mobile = 0;
 					boolean mobileflag = true;
+					
 					do {
 						System.out.println("enter usermobile");
 						String tempMobile = sc.nextLine();
@@ -78,8 +81,7 @@ public class TestMain {
 					do {
 						System.out.println("enter email");
 						userMail = sc.nextLine();
-						if (userMail.matches("[a-z][a-z0-9]*[@][a-z]+[.][A-Za-z]{2,3}")
-								&& !userMail.contains("medhub.com")) {
+						if (userMail.matches("[a-z][a-z0-9]*[@][a-z]+[.][A-Za-z]{2,3}")&& !userMail.contains("medhub.com")) {
 							mailFlag = false;
 							userMail = userMail.toLowerCase();
 						} else
@@ -95,14 +97,12 @@ public class TestMain {
 							flagpswd = false;
 							// System.out.println(password);
 						} else {
-							System.out.println("password must have 8 to 15 characters only \n"
-									+ " contains one upper case, one lower case, one number , one special character");
-
+							System.out.println("password must have 8 to 15 characters only \n" + " contains one upper case, one lower case, one number , one special character");
 						}
 					} while (flagpswd);
 					UserModel user = new UserModel(userName, age, mobile, userMail, pswd);
 					userDao1.insert(user);
-
+//							case 2 Admin and Login  
 				case 2:
 					System.out.println("login page");
 					String loginEmail = null;
@@ -148,7 +148,9 @@ public class TestMain {
 								b1 = false;
 							}
 						} while (b1);
-						boolean adminChoice = true;
+				    boolean adminChoice = true;
+				    
+//				    														Admin choices
 						do {
 							System.out.println(
 									"1. Show all products   2. Show all users   3. Add product   4.update Product Details   5.Delete Product   6.SHow user by Id");
@@ -160,15 +162,15 @@ public class TestMain {
 
 								adminChoice = false;
 								switch (adminchoice) {
-
+//																		  List All products
 								case "1":
 									List<ProductModel> productList = allProducts.viewProduts();
 
 									for (int i = 0; i < productList.size(); i++) {
 										System.out.println(productList.get(i));
 									}
-
 									break;
+//																		List All users
 								case "2":
 									UserDao allUsers = new UserDao();
 									List<UserModel> userList = allUsers.ViewAllUser();
@@ -179,7 +181,7 @@ public class TestMain {
 									break;
 
 								case "3":
-//									Karthick@1234	karthick@medhub.com@medhub.com
+//																		Add New Products
 									System.out.println("Add products");
 
 									String productname = sc.nextLine();
@@ -188,11 +190,10 @@ public class TestMain {
 									int unitPrice = Integer.parseInt(sc.nextLine());
 									int quantity = Integer.parseInt(sc.nextLine());
 									int productId = Integer.parseInt(sc.nextLine());
-									ProductModel productModule = new ProductModel(productname, productcategory,
-											description, unitPrice, quantity, productId);
+									ProductModel productModule = new ProductModel(productname, productcategory,description, unitPrice, quantity, productId);
 									productDao.insertProduct(productModule);
 									break;
-
+//																		Update products
 								case "4":
 									System.out.println("update Products");
 									System.out.println("Enter Product Id");
@@ -207,11 +208,11 @@ public class TestMain {
 									int updateUnitPrice = Integer.parseInt(sc.nextLine());
 									System.out.println("Enter quantity to be update");
 									int updateQuantity = Integer.parseInt(sc.nextLine());
-									productDao.updateProducts(updateProductId, updateproductcategory, updateProductName,
-									updateProductDescription, updateUnitPrice, updateQuantity);
+									productDao.updateProducts(updateProductId, updateproductcategory, updateProductName,updateProductDescription, updateUnitPrice, updateQuantity);
 									break;
-
+																
 								case "5":
+//																		Delete Products
 									System.out.println("Enter product Id");
 									int userId = Integer.parseInt(sc.nextLine());
 									productDao.deleteProduct(userId);
@@ -225,6 +226,8 @@ public class TestMain {
 							}
 
 						} while (adminChoice);
+						
+//																		User Page
 
 					} else {
 
@@ -245,6 +248,8 @@ public class TestMain {
 								adminflag = false;
 								int val = Integer.parseInt(choice);
 								switch (val) {
+								
+//																			Show all products
 								case 1:
 
 									List<ProductModel> productList = allProducts.viewProduts();
@@ -252,60 +257,72 @@ public class TestMain {
 									for (int i = 0; i < productList.size(); i++) {
 										System.out.println(productList.get(i));
 									}
-									System.out.println(currentUser.getAge());  
+									System.out.println(currentUser.getAge());
 									System.out.println(currentUser.getUserId());
 									System.out.println(currentUser.getName());
-									
-									boolean product=true;
-									do
-									{
-										System.out.println("   1.Add products to cart ");
-										int productChoices=Integer.parseInt(sc.nextLine());
-										
-										if(productChoices ==1 || productChoices ==2)
-										{
-											switch(productChoices)
-											{
-											
+
+									boolean product = true;
+									do {
+										System.out.println("   1.Add products to cart   2.Buy Products");
+										int productChoices = Integer.parseInt(sc.nextLine());
+
+										if (productChoices == 1 || productChoices == 2) {
+											switch (productChoices) {
+
 											case 1:
 												System.out.println("enter product name");
-												String productName= sc.nextLine();
+												String productName = sc.nextLine();
 												productName.toLowerCase();
-											ProductModel products = productDao.findProductByName(productName);
-											System.out.println(products.getProductName());
-											System.out.println(products.getQuantity());
+												ProductModel products = productDao.findProductByName(productName);
+												System.out.println(products.getProductName());
+												System.out.println(products.getQuantity());
 												System.out.println("enter quantity");
-												int quantity=Integer.parseInt(sc.nextLine());
-												double totalPrice=products.getUnitPrice()*quantity;
-											
-												if(products.getQuantity()>quantity)
-												{
-													
-													CartModel cart = new CartModel(products,currentUser,quantity,products.getUnitPrice(),totalPrice);
+												int quantity = Integer.parseInt(sc.nextLine());
+												double totalPrice = products.getUnitPrice() * quantity;
+
+												if (products.getQuantity() > quantity) {
+
+													CartModel cart = new CartModel(products, currentUser, quantity,
+															products.getUnitPrice(), totalPrice);
 													CartDao cartDao = new CartDao();
 													cartDao.insertProduct(cart);
+
 												}
-												
+
 												break;
+												
+//																			Add Product To Cart
 											case 2:
+
+												System.out.println("Enter Product name");
+												String buyProductName = sc.nextLine();
+												System.out.println("Enter Quantity");
+												int buyProductQuantity = Integer.parseInt(sc.nextLine());
+												ProductModel buyProducts = productDao.findProductByName(buyProductName);
+												totalPrice = buyProducts.getUnitPrice() * buyProductQuantity;
+												if (buyProducts.getQuantity() > buyProductQuantity) {
+													OrderDao order = new OrderDao();
+													order.insertOrder(currentUser.getUserId(),totalPrice);
+
+												}
+												else {
+													System.out.println("Stock Unavailable at the time");
+												}
 												break;
 											}
-										}
-										else {
+										} else {
 											System.out.println("Invalid option");
 										}
-										System.out.println("do you want to continue "+"Y for yes"+"N for No");
-										String continueChoice=sc.nextLine();
-										if(continueChoice.equalsIgnoreCase("n"))
-										{
-											product=false;
+										System.out.println("do you want to continue " + "Y for yes" + "N for No");
+										String continueChoice = sc.nextLine();
+										if (continueChoice.equalsIgnoreCase("n")) {
+											product = false;
 										}
-										
-											
-									}while(product);
-									
-									break;
 
+									} while (product);
+
+									break;
+//																		Update Account By User
 								case 2:
 									System.out.println("update all");
 									UserModel userModule = new UserModel();
@@ -323,7 +340,7 @@ public class TestMain {
 										System.out.println("something went wrong account is not updated");
 									}
 									break;
-
+//																	Delete Account by User								
 								case 3:
 									System.out.println("enter userId");
 									int userId = Integer.parseInt(sc.nextLine());
@@ -333,9 +350,9 @@ public class TestMain {
 									} else
 										System.out.println("something went wrong");
 									break;
-									
+
 								case 4:
-										break;
+									break;
 								}
 
 							} else {

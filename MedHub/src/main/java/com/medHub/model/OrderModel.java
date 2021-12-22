@@ -4,25 +4,14 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class OrderModel {
-
-	private int orderId;
-	private int userId;
+	
+	private UserModel user;
+	private ProductModel product;
 	private Date orderDate;
 	private double price;
 	private String orderStatus;
 	private String orderType;
-	public int getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+
 	public Date getOrderDate() {
 		return orderDate;
 	}
@@ -49,7 +38,7 @@ public class OrderModel {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(orderDate, orderId, orderStatus, orderType, price, userId);
+		return Objects.hash(orderDate, orderStatus, orderType, price);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -60,19 +49,17 @@ public class OrderModel {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderModel other = (OrderModel) obj;
-		return Objects.equals(orderDate, other.orderDate) && orderId == other.orderId
+		return Objects.equals(orderDate, other.orderDate) 
 				&& Objects.equals(orderStatus, other.orderStatus) && Objects.equals(orderType, other.orderType)
-				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price) && userId == other.userId;
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price);
 	}
 	@Override
 	public String toString() {
-		return "OrderModel [orderId=" + orderId + ", userId=" + userId + ", orderDate=" + orderDate + ", price=" + price
+		return  ", orderDate=" + orderDate + ", price=" + price
 				+ ", orderStatus=" + orderStatus + ", orderType=" + orderType + "]";
 	}
-	public OrderModel(int orderId, int userId, Date orderDate, double price, String orderStatus, String orderType) {
+	public OrderModel(Date orderDate, double price, String orderStatus, String orderType) {
 		super();
-		this.orderId = orderId;
-		this.userId = userId;
 		this.orderDate = orderDate;
 		this.price = price;
 		this.orderStatus = orderStatus;
@@ -82,6 +69,11 @@ public class OrderModel {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public OrderModel(ProductModel buyProducts, UserModel currentUser,double totalPrice) {
+			this.product=buyProducts;
+			this.user=currentUser;
+			this.price=totalPrice;
+		}
 	
 	
 }

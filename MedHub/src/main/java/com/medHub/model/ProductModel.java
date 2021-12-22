@@ -5,7 +5,8 @@ import java.util.Objects;
 public class ProductModel
 {
 	
-	
+	private OrderModel order;
+	private UserModel user;
 	private int productId;
 	private String productCategory;
 	private String productName;

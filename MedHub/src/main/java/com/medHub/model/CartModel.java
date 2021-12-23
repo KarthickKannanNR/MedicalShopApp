@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class CartModel{
 	private ProductModel product;
-	private UserModel user;   
+	private UserModel user;
 	private double unitPrice;
 	private double totalPrice;
 	private int qty;
@@ -12,9 +12,10 @@ public class CartModel{
 	
 	@Override
 	public String toString() {
-		return "product= " + product + "user= " + user + "unitPrice= " + unitPrice + "totalPrice= "
+		return "product= " + product + "unitPrice= " + unitPrice + "totalPrice= "
 				+ totalPrice + "qty= " + qty;
 	}
+//	 "user= " + user +
 
 	public CartModel() {
 		super();

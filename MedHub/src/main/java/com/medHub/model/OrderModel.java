@@ -6,6 +6,25 @@ import java.util.Objects;
 public class OrderModel {
 	
 	private UserModel user;
+	private int orderId;
+	public UserModel getUser() {
+		return user;
+	}
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+	public ProductModel getProduct() {
+		return product;
+	}
+	public void setProduct(ProductModel product) {
+		this.product = product;
+	}
 	private ProductModel product;
 	private Date orderDate;
 	private double price;
@@ -71,11 +90,18 @@ public class OrderModel {
 			this.user=currentUser;
 			this.price=totalPrice;
 		}
+	public OrderModel( UserModel currentUser,double totalPrice) {
+		this.user=currentUser;
+		this.price=totalPrice;
+	}
 	public OrderModel(Date orderDate, double price, String orderStatus) {
 		super();
 		this.orderDate = orderDate;
 		this.price = price;
 		this.orderStatus = orderStatus;
+	}
+	public OrderModel() {
+		// TODO Auto-generated constructor stub
 	}
 
 	

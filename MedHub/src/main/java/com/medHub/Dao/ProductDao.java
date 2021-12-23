@@ -170,7 +170,7 @@ public class ProductDao {
 				if(rs.next())
 				{
 				 product= new ProductModel(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDouble(5),rs.getInt(6),rs.getString(7));
-					}
+				}
 				
 				
 			} catch (SQLException e) {
@@ -180,5 +180,26 @@ public class ProductDao {
 			
 			return product;
 			}
+		
+		public void updateProductQuantity(ProductModel buyProducts)
+		{
+			System.out.println(buyProducts.getQuantity());
+			System.out.println(buyProducts.getProductId());
+			String updateQtyQuery = "update products set quantity ="+buyProducts.getQuantity()+" where product_id = "+buyProducts.getProductId()+"";
+			Connection con = GetConnection.getDBconnect();
+			try {
+				PreparedStatement pst=con.prepareStatement(updateQtyQuery);
+				System.out.println(pst.executeUpdate()+"rows updated");
+				pst=con.prepareStatement("commit");
+				pst.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.getMessage();
+			}
+			
+			
+			
+			
+		}
 	
 }

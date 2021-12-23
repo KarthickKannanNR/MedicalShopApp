@@ -1,5 +1,6 @@
 package com.medHub.Dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -243,6 +244,7 @@ public class TestMain {
 							adminflag = false;
 						} else {
 							System.out.println(" welcome " + currentUser.getName());
+							System.out.println(currentUser.getUserMail());
 						}
 
 						do {
@@ -268,7 +270,7 @@ public class TestMain {
 
 									boolean product = true;
 									do {
-										System.out.println("   1.Add products to cart   2.Buy Products  3.View cart");
+										System.out.println("   1.Add products to cart   2.Buy Products  3.View cart   4.My Orders");
 										int productChoices = Integer.parseInt(sc.nextLine());
 
 										if (productChoices == 1 || productChoices == 2 || productChoices == 3) {
@@ -300,26 +302,74 @@ public class TestMain {
 //																			Buy product
 											case 2:
 
+//												System.out.println("Enter Product name");
+//												String buyProductName = sc.nextLine();
+//												System.out.println("Enter Quantity");
+//												int buyProductQuantity = Integer.parseInt(sc.nextLine());
+//												ProductModel buyProducts = productDao.findProductByName(buyProductName);
+////												System.out.println(buyProducts.getUnitPrice());
+//												totalPrice = buyProducts.getUnitPrice() * buyProductQuantity;
+//												if (buyProducts.getQuantity() > buyProductQuantity) {
+//													OrderItemsDao orderItemDao = new OrderItemsDao();
+//													orderItemDao.insertOrders(currentUser,buyProducts,buyProductQuantity, totalPrice);
+////													OrderDao order = new OrderDao();
+////													order.orders(currentUser.getUserId(),totalPrice);
+////													OrderModel lastOrder = order.getByOrderId();
+////													OrderItemsModel orderItems = new OrderItemsModel();
+//												}
+//												else {
+//													System.out.println("Stock Unavailable at the time");
+//												}
+//												ProductDao p = new ProductDao();
+												
+												List<OrderItemsModel> orderLitemsList=new ArrayList<OrderItemsModel>();
+												double sum=0;
+												OrderModel order=new OrderModel();
+												do {
 												System.out.println("Enter Product name");
 												String buyProductName = sc.nextLine();
+												ProductModel buyProducts = productDao.findProductByName(buyProductName);
 												System.out.println("Enter Quantity");
 												int buyProductQuantity = Integer.parseInt(sc.nextLine());
-												ProductModel buyProducts = productDao.findProductByName(buyProductName);
-//												System.out.println(buyProducts.getUnitPrice());
-												totalPrice = buyProducts.getUnitPrice() * buyProductQuantity;
-												if (buyProducts.getQuantity() > buyProductQuantity) {
-													OrderItemsDao orderItemDao = new OrderItemsDao();
-													orderItemDao.insertOrders(currentUser,buyProducts,buyProductQuantity, totalPrice);
-//													OrderDao order = new OrderDao();
-//													order.orders(currentUser.getUserId(),totalPrice);
-//													OrderModel lastOrder = order.getByOrderId();
-//													OrderItemsModel orderItems = new OrderItemsModel();
+												
+												if (buyProducts.getQuantity() >= buyProductQuantity) {
+													
+													buyProducts.setQuantity((buyProducts.getQuantity())-buyProductQuantity);
+													productDao.updateProductQuantity(buyProducts);
+													OrderItemsModel orderItem= new OrderItemsModel(currentUser,order,buyProducts,buyProductQuantity,buyProducts.getUnitPrice(),(buyProducts.getUnitPrice()*buyProductQuantity));
+													orderLitemsList.add(orderItem);
+													sum+=(buyProducts.getUnitPrice()*buyProductQuantity);
+													}
+												else
+												{
+													System.out.println("Out Of Stock");
+												}
+												System.out.println("do you want continue yes/no");
+												choice=sc.nextLine();
+												}while(choice.equals("yes"));
+												
+												if(currentUser.getWallet()>=sum)
+												{
+													order=new OrderModel(currentUser,sum);
+													OrderDao orderDao=new OrderDao();
+														
+													System.out.println(currentUser.getUserId() + " "+ sum);
+													orderDao.orders(currentUser.getUserId(), sum);
+													
+													int orderId=orderDao.getByOrderId();
+													OrderItemsDao orderItemDao=new OrderItemsDao();
+													for(OrderItemsModel oi:orderLitemsList) {
+												         oi.getOrderModel().setOrderId(orderId);
+														 orderItemDao.insertOrders(oi);
+												} 
+												
 												}
 												else {
-													System.out.println("Stock Unavailable at the time");
-												}
-												ProductDao p = new ProductDao();
-												
+													System.out.println("You Have Not Enough Money To Buy");
+													System.out.println("Add money to Wallet Enter Amount");
+													double walletAmount = Double.parseDouble(sc.nextLine());
+													userDao1.addMoneyInWallet(walletAmount,currentUser);
+													}
 												break;
 												
 											case 3:
@@ -352,14 +402,15 @@ public class TestMain {
 											System.out.println("Invalid option");
 										}
 										
-										
-										System.out.println("do you want to continue " + "Y for yes " + " N for No");
+										System.out.println("do you want to continue " + "Y for yes" + " N for No");
 										String continueChoice = sc.nextLine();
 										if (continueChoice.equalsIgnoreCase("n")) {
 											product = false;
 										}
 
 									} while (product);
+									break;
+								case 4:
 									break;
 //																		Update Account By User
 								case 2:
@@ -372,7 +423,7 @@ public class TestMain {
 									String password = sc.nextLine();
 									System.out.println("update mobile");
 									long mobilenumber = Long.parseLong(sc.nextLine());
-									int updateStatus = userDao1.update(userModule);
+									int updateStatus = userDao1.update(currentUser);
 									if (updateStatus > 0) {
 										System.out.println("update sucessfully");
 									} else {

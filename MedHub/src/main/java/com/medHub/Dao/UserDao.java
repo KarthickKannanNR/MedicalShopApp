@@ -97,33 +97,33 @@ public List<UserModel> ViewAllUser() throws SQLException
 }
 	
 	
-	public int update (UserModel userModule) throws ClassNotFoundException, SQLException {
-		
+	public int update (UserModel currentUser) throws ClassNotFoundException, SQLException {
+		System.out.println(currentUser);
 		String update = null;
 		try {
-			update = "update users set full_name=?,user_password=?,user_mobile=? where user_email='"+userModule.getUserMail()+"'";
+			update = "update users set full_name=?,user_password=?,user_mobile=? where user_email='"+currentUser.getUserMail()+"'";
+			Connection con=GetConnection.getDBconnect();
+			PreparedStatement pst=con.prepareStatement(update);
+			pst.setString(1, currentUser.getName());
+			pst.setString(2, currentUser.getUserPassword());
+			pst.setLong(3,currentUser.getUserMobile());
+			System.out.println(currentUser.getUserMail());
+			System.out.println(currentUser.getUserMobile());
+			int res=pst.executeUpdate();
+			System.out.println(res + "is updated");
+			pst=con.prepareStatement("commit");
+			res=pst.executeUpdate();
+			pst.close();
+			con.close();
+			return res;
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(update);
-		
-		Connection con=GetConnection.getDBconnect();
-		PreparedStatement pst=con.prepareStatement(update);
-		pst=con.prepareStatement("commit");
-		pst.setString(1, userModule.getName());
-		pst.setString(2, userModule.getUserPassword());
-		pst.setLong(3,userModule.getUserMobile());
-		
-		System.out.println(update);
-		System.out.println(userModule.getUserMail());
-		System.out.println(userModule.getUserMobile());
-		int res=pst.executeUpdate();
-		System.out.println(res + "is updated");
-		
-		pst.close();
-		con.close();
-		return res;
+				
+	 return 0;
 	}
 	
 	public UserModel getUserById(int userId)
@@ -178,11 +178,29 @@ public List<UserModel> ViewAllUser() throws SQLException
 			}
 			else 
 				return false;
+		}
+
+
+//														ADD MONEY TO WALLET
+	
+		public void addMoneyInWallet(double walletAmount,UserModel currentUser) {
+			
+			System.out.println("addMoneyInWallet called");
+			double addAmount=currentUser.getWallet()+walletAmount;
+			String walletQuery="update users set user_wallet ="+addAmount+" where user_email ='"+currentUser.getUserMail()+"'";
+			Connection con = GetConnection.getDBconnect();
+			try {
+				PreparedStatement ps = con.prepareStatement(walletQuery);
+				ps.executeQuery();
+				System.out.println("Money added to wallet");
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+			}
 			
 		
-		
-		
-	}
+			}
 	
 	
 	

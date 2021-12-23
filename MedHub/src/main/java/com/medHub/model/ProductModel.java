@@ -81,7 +81,7 @@ public class ProductModel
 	}
 	@Override
 	public String toString() {
-		return  productId+"\nproductCategory="
+		return "Product id="+ productId+"\nproductCategory="
 				+ productCategory + "\nproductName=" + productName + "\nunitPrice=" + unitPrice + "\nquantity="
 				+ quantity +"\n";
 	}
@@ -121,4 +121,6 @@ public class ProductModel
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+
 }

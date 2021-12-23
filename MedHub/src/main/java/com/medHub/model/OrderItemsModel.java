@@ -8,8 +8,9 @@ import org.apache.catalina.User;
 public class OrderItemsModel {
 
 	private int itemId;
-	private User user;
+	private UserModel user;
 	private ProductModel product;
+	private OrderModel orderModel;
 	private Date orderDate;
 	private int quantity;
 	private double unitPrice;
@@ -24,28 +25,35 @@ public class OrderItemsModel {
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
-	public OrderItemsModel(int itemId, User user, ProductModel product, Date orderDate, int quantity, double unitPrice,
+	public OrderItemsModel( UserModel user, OrderModel orderModel,ProductModel product,int quantity, double unitPrice,
 			double totalPrice) {
 		super();
-		this.itemId = itemId;
 		this.user = user;
 		this.product = product;
-		this.orderDate = orderDate;
+		this.orderModel=orderModel;	
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
 		this.totalPrice = totalPrice;
 	}
-	public User getUser() {
+	
+
+	
+	public UserModel getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(UserModel user) {
 		this.user = user;
+	}
+	public OrderModel getOrderModel() {
+		return orderModel;
+	}
+	public void setOrderModel(OrderModel orderModel) {
+		this.orderModel = orderModel;
 	}
 	@Override
 	public String toString() {
-		return "OrderItemsModel [itemId=" + itemId + ", user=" + user + ", product=" + product + ", orderDate="
-				+ orderDate + ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", totalPrice=" + totalPrice
-				+ "]";
+		return "OrderItemsModel itemId= " + itemId + "\nuser= " + user + "\nproduct= " + product + "\norderDate="
+				+ orderDate + "\nquantity= " + quantity + "\nunitPrice=" + unitPrice + "\ntotalPrice=" + totalPrice;
 	}
 	public ProductModel getProduct() {
 		return product;

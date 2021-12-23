@@ -394,10 +394,10 @@ public class TestMain {
 													
 													
 												}while(confirmPurchaseFlag);
-												
-												
 												break;
+												
 											}
+											
 										} else {
 											System.out.println("Invalid option");
 										}
@@ -410,8 +410,7 @@ public class TestMain {
 
 									} while (product);
 									break;
-								case 4:
-									break;
+							
 //																		Update Account By User
 								case 2:
 									System.out.println("update all");

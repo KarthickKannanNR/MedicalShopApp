@@ -16,18 +16,27 @@ public class OrderDao {
 	public  void  orders(int userId ,double totalPrice) {
 		// TODO Auto-generated method stub
 		String orderQuery="insert into orders (user_id,total_price) values(?,?)";
+		System.out.println(totalPrice);
 		Connection con = GetConnection.getDBconnect();
+		System.out.println(totalPrice);
+
 		try {
 			PreparedStatement pst = con.prepareStatement(orderQuery);
+			System.out.println(totalPrice);
+
 			pst.setInt(1,userId );
 			pst.setDouble(2, totalPrice);
 			pst.executeUpdate();
+			System.out.println(totalPrice);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
+			System.out.println(totalPrice);
+
 		}
-		return null;
-		
+		System.out.println(totalPrice);
+
 	}
 	
 	public OrderModel getByOrderId()
@@ -47,7 +56,7 @@ public class OrderDao {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 		return order;
 		

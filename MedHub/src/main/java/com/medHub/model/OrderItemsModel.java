@@ -1,32 +1,63 @@
 package com.medHub.model;
 
+import java.util.Date;
 import java.util.Objects;
+
+import org.apache.catalina.User;
 
 public class OrderItemsModel {
 
 	private int itemId;
-	private int orderId;
-	private int productId;
+	private User user;
+	private ProductModel product;
+	private Date orderDate;
 	private int quantity;
 	private double unitPrice;
 	private double totalPrice;
 	public int getItemId() {
 		return itemId;
 	}
+	public OrderItemsModel() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
-	public int getOrderId() {
-		return orderId;
+	public OrderItemsModel(int itemId, User user, ProductModel product, Date orderDate, int quantity, double unitPrice,
+			double totalPrice) {
+		super();
+		this.itemId = itemId;
+		this.user = user;
+		this.product = product;
+		this.orderDate = orderDate;
+		this.quantity = quantity;
+		this.unitPrice = unitPrice;
+		this.totalPrice = totalPrice;
 	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public User getUser() {
+		return user;
 	}
-	public int getProductId() {
-		return productId;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	public void setProductId(int productId) {
-		this.productId = productId;
+	@Override
+	public String toString() {
+		return "OrderItemsModel [itemId=" + itemId + ", user=" + user + ", product=" + product + ", orderDate="
+				+ orderDate + ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", totalPrice=" + totalPrice
+				+ "]";
+	}
+	public ProductModel getProduct() {
+		return product;
+	}
+	public void setProduct(ProductModel product) {
+		this.product = product;
+	}
+	public Date getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
 	public int getQuantity() {
 		return quantity;
@@ -46,41 +77,7 @@ public class OrderItemsModel {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(itemId, orderId, productId, quantity, totalPrice, unitPrice);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OrderItemsModel other = (OrderItemsModel) obj;
-		return itemId == other.itemId && orderId == other.orderId && productId == other.productId
-				&& quantity == other.quantity
-				&& Double.doubleToLongBits(totalPrice) == Double.doubleToLongBits(other.totalPrice)
-				&& Double.doubleToLongBits(unitPrice) == Double.doubleToLongBits(other.unitPrice);
-	}
-	public OrderItemsModel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public OrderItemsModel(int itemId, int orderId, int productId, int quantity, double unitPrice, double totalPrice) {
-		super();
-		this.itemId = itemId;
-		this.orderId = orderId;
-		this.productId = productId;
-		this.quantity = quantity;
-		this.unitPrice = unitPrice;
-		this.totalPrice = totalPrice;
-	}
-	@Override
-	public String toString() {
-		return "OrderItems [itemId=" + itemId + ", orderId=" + orderId + ", productId=" + productId + ", quantity="
-				+ quantity + ", unitPrice=" + unitPrice + ", totalPrice=" + totalPrice + "]";
-	}
+	
+	
 	
 }

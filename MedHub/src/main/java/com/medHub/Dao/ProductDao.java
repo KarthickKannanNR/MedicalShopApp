@@ -142,9 +142,33 @@ public class ProductDao {
 				System.out.println(6);
 //				pst.setString(1,productName);
 				ResultSet rs = pst.executeQuery();
-				System.out.println(7);
 				if(rs.next())
-					{
+				{
+				 product= new ProductModel(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDouble(5),rs.getInt(6),rs.getString(7));
+					}
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return product;
+			}
+		
+		public ProductModel findProductByProductId(int id)
+		{
+			int productId=0;
+			String query="select * from products where product_id='"+id+"'";
+			Connection con = GetConnection.getDBconnect();
+			ProductModel product=null;
+			try {
+				PreparedStatement pst= con.prepareStatement(query);
+				System.out.println(6);
+//				pst.setString(1,productName);
+				ResultSet rs = pst.executeQuery();
+				if(rs.next())
+				{
 				 product= new ProductModel(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDouble(5),rs.getInt(6),rs.getString(7));
 					}
 				

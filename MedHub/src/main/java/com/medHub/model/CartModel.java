@@ -4,9 +4,7 @@ import java.util.Objects;
 
 public class CartModel{
 	private ProductModel product;
-	private UserModel user;
-//	private int productId;
-//	private int userId;
+	private UserModel user;   
 	private double unitPrice;
 	private double totalPrice;
 	private int qty;
@@ -14,8 +12,8 @@ public class CartModel{
 	
 	@Override
 	public String toString() {
-		return "CartModel [product=" + product + ", user=" + user + ", unitPrice=" + unitPrice + ", totalPrice="
-				+ totalPrice + ", qty=" + qty + "]";
+		return "product= " + product + "user= " + user + "unitPrice= " + unitPrice + "totalPrice= "
+				+ totalPrice + "qty= " + qty;
 	}
 
 	public CartModel() {
@@ -35,7 +33,7 @@ public class CartModel{
 		this.unitPrice = unitPrice;
 	}
 
-	public CartModel(ProductModel product, UserModel user, int qty,Double unitPrice,double totalPrice) {
+	public CartModel(ProductModel product, UserModel user, int qty,double unitPrice,double totalPrice) {
 		super();
 		this.product = product;
 		this.user = user;

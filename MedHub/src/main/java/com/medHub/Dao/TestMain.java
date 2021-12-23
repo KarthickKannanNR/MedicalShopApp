@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.medHub.model.AdminModel;
 import com.medHub.model.CartModel;
+import com.medHub.model.OrderItemsModel;
 import com.medHub.model.OrderModel;
 import com.medHub.model.ProductModel;
 import com.medHub.model.UserModel;
@@ -16,10 +17,14 @@ public class TestMain {
 		AdminDao adminDao = new AdminDao();
 		UserDao userDao1 = new UserDao();
 		ProductDao productDao = new ProductDao();
+		CartDao cartdao = new CartDao();
+		
 
 		String logregtem = null;
 		boolean end = true;
-//Starting do while
+
+		String continueChoice1;
+		//Starting do while
 //																				Login Or Register	
 		do {
 			Scanner sc = new Scanner(System.in);
@@ -263,12 +268,13 @@ public class TestMain {
 
 									boolean product = true;
 									do {
-										System.out.println("   1.Add products to cart   2.Buy Products");
+										System.out.println("   1.Add products to cart   2.Buy Products  3.View cart");
 										int productChoices = Integer.parseInt(sc.nextLine());
 
-										if (productChoices == 1 || productChoices == 2) {
+										if (productChoices == 1 || productChoices == 2 || productChoices == 3) {
 											switch (productChoices) {
 
+//																			Add Product To Cart
 											case 1:
 												System.out.println("enter product name");
 												String productName = sc.nextLine();
@@ -291,7 +297,7 @@ public class TestMain {
 
 												break;
 												
-//																			Add Product To Cart
+//																			Buy product
 											case 2:
 
 												System.out.println("Enter Product name");
@@ -299,29 +305,61 @@ public class TestMain {
 												System.out.println("Enter Quantity");
 												int buyProductQuantity = Integer.parseInt(sc.nextLine());
 												ProductModel buyProducts = productDao.findProductByName(buyProductName);
+//												System.out.println(buyProducts.getUnitPrice());
 												totalPrice = buyProducts.getUnitPrice() * buyProductQuantity;
 												if (buyProducts.getQuantity() > buyProductQuantity) {
-													OrderDao order = new OrderDao();
-												order.orders(currentUser.getUserId(),totalPrice);
-											OrderModel lastOrder = order.getByOrderId();
-
+													OrderItemsDao orderItemDao = new OrderItemsDao();
+													orderItemDao.insertOrders(currentUser,buyProducts,buyProductQuantity, totalPrice);
+//													OrderDao order = new OrderDao();
+//													order.orders(currentUser.getUserId(),totalPrice);
+//													OrderModel lastOrder = order.getByOrderId();
+//													OrderItemsModel orderItems = new OrderItemsModel();
 												}
 												else {
 													System.out.println("Stock Unavailable at the time");
 												}
+												ProductDao p = new ProductDao();
+												
+												break;
+												
+											case 3:
+												List<CartModel> cartItems = cartdao.viewCart(currentUser);
+
+												for (int i = 0; i < cartItems.size(); i++) {
+													System.out.println(cartItems.get(i));
+												}
+												boolean confirmPurchaseFlag=true;
+												do {
+													System.out.println("Confirm Purchase enter 1");
+													int confirmPurchase=Integer.parseInt(sc.nextLine());
+													
+													if(confirmPurchase==1)
+													{
+														confirmPurchaseFlag=false;
+														
+													}
+													else {
+														System.out.println("Invalid Input");
+													}
+													
+													
+												}while(confirmPurchaseFlag);
+												
+												
 												break;
 											}
 										} else {
 											System.out.println("Invalid option");
 										}
-										System.out.println("do you want to continue " + "Y for yes" + "N for No");
+										
+										
+										System.out.println("do you want to continue " + "Y for yes " + " N for No");
 										String continueChoice = sc.nextLine();
 										if (continueChoice.equalsIgnoreCase("n")) {
 											product = false;
 										}
 
 									} while (product);
-
 									break;
 //																		Update Account By User
 								case 2:
@@ -383,7 +421,11 @@ public class TestMain {
 			}
 
 //		user insert
-
-		} while (end);
+			System.out.println("Are you want to continue");
+			System.out.println("Enter Yes or No");
+			 continueChoice1=sc.nextLine();
+			continueChoice1.toLowerCase();
+			
+		} while (continueChoice1.equalsIgnoreCase("yes"));
 	}
 }

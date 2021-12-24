@@ -41,7 +41,7 @@ public class CartDao {
 		catch(Exception e)
 		{
 			e.getMessage();
-			System.out.println("Syntax error");
+			System.out.println("Something Went Wrong");
 		}
 		
 		

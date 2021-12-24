@@ -5,13 +5,13 @@ import java.util.Objects;
 
 import org.apache.catalina.User;
 
-public class OrderItemsModel {
+public class OrderItemsModel extends OrderModel {
 
 	private int itemId;
 	private UserModel user;
 	private ProductModel product;
 	private OrderModel orderModel;
-	private Date orderDate;
+	
 	private int quantity;
 	private double unitPrice;
 	private double totalPrice;
@@ -52,8 +52,7 @@ public class OrderItemsModel {
 	}
 	@Override
 	public String toString() {
-		return "OrderItemsModel itemId= " + itemId + "\nuser= " + user + "\nproduct= " + product + "\norderDate="
-				+ orderDate + "\nquantity= " + quantity + "\nunitPrice=" + unitPrice + "\ntotalPrice=" + totalPrice;
+		return "order id " + getOrderId() + "\nuser " + user + "\nproduct " + product + "\nquantity " + quantity + "\nunitPrice " + unitPrice + "\ntotalPrice " + totalPrice+"\n";
 	}
 	public ProductModel getProduct() {
 		return product;
@@ -61,12 +60,8 @@ public class OrderItemsModel {
 	public void setProduct(ProductModel product) {
 		this.product = product;
 	}
-	public Date getOrderDate() {
-		return orderDate;
-	}
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
+	
+	
 	public int getQuantity() {
 		return quantity;
 	}

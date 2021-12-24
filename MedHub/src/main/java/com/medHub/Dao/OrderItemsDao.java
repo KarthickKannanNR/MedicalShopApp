@@ -15,7 +15,6 @@ public class OrderItemsDao {
 //	currentUser,buyProducts,buyProductQuantity, totalPrice
 	public  void  insertOrders(OrderItemsModel oi) {
 		// TODO Auto-generated method stub
-		System.out.println("method called");
 		String orderQuery="insert into order_items (user_id,order_id,product_id,quantity,unit_price,total_price) values(?,?,?,?,?,?)";
 		Connection con = GetConnection.getDBconnect();
 
@@ -28,6 +27,7 @@ public class OrderItemsDao {
 			pst.setDouble(5, oi.getUnitPrice());
 			pst.setDouble(6, oi.getTotalPrice());
 			System.out.println(pst.executeUpdate()+" rows updated");
+			pst.executeUpdate("commit");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -48,10 +48,10 @@ public class OrderItemsDao {
 		try {
 			PreparedStatement ps = con.prepareStatement(qwery);
 			ResultSet rs = ps.executeQuery();
-			
+			System.out.format("%-15s%-10s%-15s%-15s%-10s\n\n","Product Name","Qty","Unit Price","Total Price","Order Id");
 			while(rs.next())
 			{
-			System.out.format(rs.getString(1),rs.getInt(2),rs.getDouble(3),rs.getDouble(4),rs.getInt(5));
+			System.out.format("%-15s%-10s%-15s%-15s%-10s\n",rs.getString(1),rs.getInt(2),rs.getDouble(3),rs.getDouble(4),rs.getInt(5));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

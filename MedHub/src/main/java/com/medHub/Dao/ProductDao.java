@@ -139,7 +139,6 @@ public class ProductDao {
 			ProductModel product=null;
 			try {
 				PreparedStatement pst= con.prepareStatement(query);
-				System.out.println(6);
 //				pst.setString(1,productName);
 				ResultSet rs = pst.executeQuery();
 				if(rs.next())

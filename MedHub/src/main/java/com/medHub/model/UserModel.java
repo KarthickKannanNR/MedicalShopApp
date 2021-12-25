@@ -13,6 +13,12 @@ public class UserModel {
 	private String userPassword;
 	private double wallet;
 	
+	public int getPoints() {
+		return points;
+	}
+	public void setPoints(int points) {
+		this.points = points;
+	}
 	public long getUserMobile() {
 		return userMobile;
 	}

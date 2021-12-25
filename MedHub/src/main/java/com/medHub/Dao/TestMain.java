@@ -308,55 +308,61 @@ public class TestMain {
 
 //																			Buy product
 											case 2:									
-
+												
 												List<OrderItemsModel> orderLitemsList = new ArrayList<OrderItemsModel>();
 												double sum = 0;
 												OrderModel order = new OrderModel();
+												ProductModel buyProducts = new ProductModel();
+												int buyProductQuantity;
 												do {
 													System.out.println("Enter Product name");
 													String buyProductName = sc.nextLine();
 													buyProductName.toLowerCase();
-													ProductModel buyProducts = productDao.findProductByName(buyProductName);
+													buyProducts=productDao.findProductByName(buyProductName);
 													System.out.println("Enter Quantity");
-													int buyProductQuantity = Integer.parseInt(sc.nextLine());
-
+													buyProductQuantity = Integer.parseInt(sc.nextLine());
+													System.out.println(buyProducts.getQuantity() );
 													if (buyProducts.getQuantity() >= buyProductQuantity) {
+														System.out.println(buyProducts.getQuantity() >= buyProductQuantity);
+														if (currentUser.getWallet() >= sum) {
+															order = new OrderModel(currentUser, sum);
+															OrderDao orderDao = new OrderDao();
 
-														buyProducts.setQuantity((buyProducts.getQuantity()) - buyProductQuantity);
-														productDao.updateProductQuantity(buyProducts);
-														OrderItemsModel orderItem = new OrderItemsModel(currentUser,
-																order, buyProducts, buyProductQuantity,
-																buyProducts.getUnitPrice(),
-																(buyProducts.getUnitPrice() * buyProductQuantity));
-														orderLitemsList.add(orderItem);
-														sum += (buyProducts.getUnitPrice() * buyProductQuantity);
+//															System.out.println(currentUser.getUserId() + " " + sum);
+															orderDao.orders(currentUser.getUserId(), sum);
+
+															buyProducts.setQuantity((buyProducts.getQuantity()) - buyProductQuantity);
+															productDao.updateProductQuantity(buyProducts);
+															OrderItemsModel orderItem = new OrderItemsModel(currentUser,
+																	order, buyProducts, buyProductQuantity,
+																	buyProducts.getUnitPrice(),
+																	(buyProducts.getUnitPrice() * buyProductQuantity));
+															orderLitemsList.add(orderItem);
+															sum += (buyProducts.getUnitPrice() * buyProductQuantity);
+
+															int orderId = orderDao.getByOrderId();
+															OrderItemsDao orderItemDao = new OrderItemsDao();
+															for (OrderItemsModel oi : orderLitemsList) {
+																oi.getOrderModel().setOrderId(orderId);
+																orderItemDao.insertOrders(oi);
+															}
+
+														}
+														 else {
+																System.out.println("You Have Not Enough Money To Buy");
+																System.out.println("Add money to Wallet Enter Amount");
+																double walletAmount = Double.parseDouble(sc.nextLine());
+																userDao1.addMoneyInWallet(walletAmount, currentUser);
+															}
+
 													} else {
-														System.out.println("Out Of Stock");
+														System.out.println("Sorry Currently The Product Is Out Of Stock");
 													}
 													System.out.println("do you want continue yes/no");
 													choice = sc.nextLine();
 												} while (choice.equals("yes"));
 
-												if (currentUser.getWallet() >= sum) {
-													order = new OrderModel(currentUser, sum);
-													OrderDao orderDao = new OrderDao();
-
-													System.out.println(currentUser.getUserId() + " " + sum);
-													orderDao.orders(currentUser.getUserId(), sum);
-
-													int orderId = orderDao.getByOrderId();
-													OrderItemsDao orderItemDao = new OrderItemsDao();
-													for (OrderItemsModel oi : orderLitemsList) {
-														oi.getOrderModel().setOrderId(orderId);
-														orderItemDao.insertOrders(oi);
-													}
-
-												} else {
-													System.out.println("You Have Not Enough Money To Buy");
-													System.out.println("Add money to Wallet Enter Amount");
-													double walletAmount = Double.parseDouble(sc.nextLine());
-													userDao1.addMoneyInWallet(walletAmount, currentUser);
-												}
+										
 												break;
 //																		View Cart
 											case 3:
